@@ -7,6 +7,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { NoPageFounfComponent } from './pages/no-page-founf/no-page-founf.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component
     RegisterComponent,
     NoPageFounfComponent,
     DashboardComponent,
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule
