@@ -6,6 +6,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { NoPageFounfComponent } from './pages/no-page-founf/no-page-founf.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
     LoginComponent,
     RegisterComponent,
     NoPageFounfComponent,
-    DashboardComponent
+    DashboardComponent,
+    BreadcrumbsComponent
   ],
   imports: [
     BrowserModule
