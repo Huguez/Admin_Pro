@@ -8,6 +8,7 @@ import { NoPageFounfComponent } from './pages/no-page-founf/no-page-founf.compon
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { HeaderComponent } from './shared/header/header.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
     NoPageFounfComponent,
     DashboardComponent,
     BreadcrumbsComponent,
-    SidebarComponent
+    SidebarComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule
