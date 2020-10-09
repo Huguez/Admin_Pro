@@ -6,7 +6,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { ProgressComponent } from './pages/progress/progress.component';
 import { GraficaComponent } from './pages/grafica/grafica.component';
-import { NoPageFoundComponent } from './pages/no-page-found/no-page-found.component';
+import { NoPageFoundComponent } from './404/no-page-found.component';
 import { PagesComponent } from './pages/pages.component';
 
 const routes: Routes = [
