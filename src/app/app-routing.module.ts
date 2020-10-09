@@ -6,7 +6,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { ProgressComponent } from './pages/progress/progress.component';
 import { GraficaComponent } from './pages/grafica/grafica.component';
-import { NoPageFounfComponent } from './pages/no-page-founf/no-page-founf.component';
+import { NoPageFoundComponent } from './pages/no-page-found/no-page-found.component';
 import { PagesComponent } from './pages/pages.component';
 
 const routes: Routes = [
@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   
-  { path: '**', component: NoPageFounfComponent },
+  { path: '**', component: NoPageFoundComponent },
 ];
 
 @NgModule({

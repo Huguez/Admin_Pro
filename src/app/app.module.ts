@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { NoPageFounfComponent } from './pages/no-page-founf/no-page-founf.component';
+import { NoPageFoundComponent } from './pages/no-page-found/no-page-found.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
@@ -20,7 +20,7 @@ import { PagesComponent } from './pages/pages.component';
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    NoPageFounfComponent,
+    NoPageFoundComponent,
     DashboardComponent,
     BreadcrumbsComponent,
     SidebarComponent,
