@@ -1,18 +1,20 @@
+// modulos de Angunlar
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+// modulos de terceros
+import { ChartsModule } from 'ng2-charts';
+
+// mis Modulos
 import { SharedModule } from '../shared/shared.module';
+import { ComponentsModule } from '../components/components.module';
 
 import { PagesComponent } from './pages.component';
 import { GraficaComponent } from './grafica/grafica.component';
 import { ProgressComponent } from './progress/progress.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppRoutingModule } from '../app-routing.module';
-import { ComponentsModule } from '../components/components.module';
-
-
-
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { ComponentsModule } from '../components/components.module';
   imports: [
     CommonModule,
     FormsModule,
+    ChartsModule,
     SharedModule, 
     AppRoutingModule,
     ComponentsModule
