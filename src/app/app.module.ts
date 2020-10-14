@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 
 import { NoPageFoundComponent } from './404/no-page-found.component';
 import { SharedModule } from './shared/shared.module';
+import { ComponentsModule } from './components/components.module';
 
 
 
@@ -17,13 +18,16 @@ import { SharedModule } from './shared/shared.module';
     AppComponent,
 
     NoPageFoundComponent,
+
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     PagesModule,
     SharedModule,
-    AuthModule
+    AuthModule,
+    ComponentsModule
   ],
   bootstrap: [AppComponent]
 })
