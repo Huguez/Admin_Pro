@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable, interval } from 'rxjs';
-import { retry, take, map } from 'rxjs/operators';
+import { retry, take, map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-rxjs',
@@ -20,13 +20,20 @@ export class RxjsComponent {
     //     () => console.log("Si se hizo Carnal")
     // );
 
-    this.retornaIntervalo( 900, 4 ).subscribe( 
+    this.retornaIntervalo( 900, 10 ).subscribe( 
       (valor) => console.log("valor: ", valor )
     );
   }
+
+
   
-  retornaIntervalo( time: number, tope: number ){
-    return interval(time).pipe( take( tope ), map( valor => { return 'Hola mundo ' + (valor + 1) } ) );
+  retornaIntervalo( time: number, tope: number ): Observable<number> {
+    return interval( time )
+            .pipe( 
+              take( tope ), 
+              map( valor =>  valor + 1 ) ,
+              filter( valor=> valor%2  === 0 )
+            );
   }
 
   retornaObservable(): Observable<number> {
