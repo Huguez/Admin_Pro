@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Observable, interval } from 'rxjs';
+import { Component, OnDestroy } from '@angular/core';
+import { Observable, interval, Subscription } from 'rxjs';
 import { retry, take, map, filter } from 'rxjs/operators';
 
 @Component({
@@ -8,7 +8,10 @@ import { retry, take, map, filter } from 'rxjs/operators';
   styles: [
   ]
 })
-export class RxjsComponent {
+export class RxjsComponent implements OnDestroy {
+  
+  public intertavlSubs: Subscription;
+
 
   constructor() {
 
@@ -20,17 +23,20 @@ export class RxjsComponent {
     //     () => console.log("Si se hizo Carnal")
     // );
 
-    this.retornaIntervalo( 900, 10 ).subscribe( 
-      (valor) => console.log("valor: ", valor )
-    );
+    this.intertavlSubs = this.retornaIntervalo( 90, 10 ).subscribe( console.log );
   }
 
 
+  ngOnDestroy(){
+    this.intertavlSubs.unsubscribe();
+    console.log("se detiene la suscripcion!!");
+    
+  }
   
   retornaIntervalo( time: number, tope: number ): Observable<number> {
     return interval( time )
             .pipe( 
-              take( tope ), 
+              // take( tope ), 
               map( valor =>  valor + 1 ) ,
               filter( valor=> valor%2  === 0 )
             );
