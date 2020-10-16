@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
 
@@ -8,13 +8,24 @@ import { retry } from 'rxjs/operators';
   styles: [
   ]
 })
-export class RxjsComponent implements OnInit {
+export class RxjsComponent {
 
   constructor() {
+    this.retornaObservable().pipe( 
+        retry()
+      ).subscribe( 
+        valor => console.log("subs: ", valor ), 
+        err => console.warn("valio queso por esto: ", err ),
+        () => console.log("Si se hizo Carnal")
+    );
+  }
+
+
+  retornaObservable(): Observable<number> {
 
     let i = -1;
     
-    const obs$ = new Observable( observer =>{
+    const obs$ = new Observable<number>( observer =>{
       
       const intervalo = setInterval( () => {
         
@@ -34,16 +45,7 @@ export class RxjsComponent implements OnInit {
       }, 2000 );
     } );
 
-    obs$.pipe( retry() ).subscribe( 
-      valor => console.log("subs: ", valor ), 
-      err => console.warn("valio queso por esto: ", err ),
-      () => console.log("Si se hizo Carnal")
-    );
-
-
-  }
-
-  ngOnInit(): void {
+    return obs$;
   }
 
 }
