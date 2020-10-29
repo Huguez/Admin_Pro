@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-register',
@@ -20,17 +21,20 @@ export class RegisterComponent {
     validators: this.passwordsIguales( 'password', 'password2' )
   }  );
 
-  constructor( private fb: FormBuilder ){}
+  constructor( private fb: FormBuilder, private _us: UsuarioService ){}
   
   crearUsuario(){
     this.formSumitted = true;
-    console.log(this.registerForm.getError);
-      
-    if( this.registerForm.valid ){
-      console.log("posteando formulario...");
-    }else{
-      console.log("formulario no es correcto");
+    
+    if( this.registerForm.invalid ){
+      return;
     }
+    
+    this._us.crearUsuario( this.registerForm.value ).subscribe( 
+      ( res ) => console.log(res)
+     ,( error ) => console.warn( error.error ) );
+
+
   }
 
   campoNoValido( campo: string ){
