@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { RegisterForm } from '../interfaces/refister-form';
+
 import { environment } from '../../environments/environment';
+
+import { LoginForm } from '../interfaces/login-form';
+import { RegisterForm } from '../interfaces/register-form';
 
 const base_url = environment.base_url;
 
@@ -16,5 +19,7 @@ export class UsuarioService {
     return this.http.post( `${ base_url }/usuarios`, formData );
   }
 
-
+  login( formData: LoginForm ){
+    return this.http.post( `${ base_url }/login`, formData );
+  }
 }
