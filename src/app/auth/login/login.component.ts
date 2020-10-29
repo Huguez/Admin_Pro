@@ -28,9 +28,8 @@ export class LoginComponent {
     
     this._us.login( this.loginForm.value ).subscribe(
       ( res:any )=>{
-        console.log( res.token );
+
       }, ( err )=>{
-        
         swal.fire("Error", err.error.msg, 'error');
       }
     )
