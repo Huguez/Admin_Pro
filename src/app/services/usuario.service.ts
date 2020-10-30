@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators'
+import { of } from 'rxjs';
+import { tap, map, catchError } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 
@@ -16,6 +17,22 @@ export class UsuarioService {
 
   constructor( private http: HttpClient ){ }
   
+  validarToken(){
+    const token = localStorage.getItem('token') || '';
+    
+    return this.http.get( `${ base_url }/login/renew` , {
+      headers: { 'x-token': token } 
+    } ).pipe( 
+      tap( ( resp:any ) => {
+        localStorage.setItem( 'token', resp.token );
+      } ),
+      map( ( resp:any ) => {
+        return true
+      } ), catchError( error => of( false ) )
+     )
+  }
+
+
   crearUsuario( formData: RegisterForm ){
     return this.http.post( `${ base_url }/usuarios`, formData ).pipe( 
       tap( ( resp:any ) => {
@@ -24,16 +41,19 @@ export class UsuarioService {
      );
   }
 
+
   login( formData: LoginForm ){
     return this.http.post( `${ base_url }/login`, formData ).pipe( 
       tap( ( resp:any ) => {
+        console.log( formData );
+        
         localStorage.setItem( 'token', resp.token );
       } )
      );
   }
 
+  
   loginGoogle( token ){
-    
     return this.http.post( `${ base_url }/login/google`, {token} ).pipe( 
       tap( ( resp:any ) => {
         console.log( resp.tokenJWT );

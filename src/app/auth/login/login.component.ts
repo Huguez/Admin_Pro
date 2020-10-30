@@ -19,8 +19,8 @@ export class LoginComponent implements OnInit {
   public auth2:any;
 
   public loginForm = this.fb.group({
-    email:     [ localStorage.getItem('email') || '', [Validators.required, Validators.email ] ],
-    password:  ['', [Validators.required ] ],
+    email:     [ localStorage.getItem('email') || '', [ Validators.required, Validators.email ] ],
+    password:  ['', [ Validators.required ] ],
     recordarme: [false]
   } );
 
@@ -31,7 +31,12 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
+    this.formSumitted = true;
     
+    if( this.loginForm.invalid ){
+      return;
+    }
+
     this._us.login( this.loginForm.value ).subscribe(
       ( res:any )=>{
         
@@ -42,22 +47,17 @@ export class LoginComponent implements OnInit {
           localStorage.removeItem('email');
         }
 
+        this.router.navigateByUrl( '/' );
+
       }, ( err )=>{
-        swal.fire("Error", err.error.msg, 'error');
+        console.log(err);
+        
+        swal.fire("Error", err.error, 'error');
       }
     )
     
     // this.router.navigateByUrl( '/' );    
   }
-
-  // onSuccess( googleUser ) {
-  //   var id_token = googleUser.getAuthResponse().id_token;
-  //   console.log( id_token );
-  // }
-
-  // onFailure(error) {
-  //   console.log(error);
-  // }
 
   renderButton() {
     gapi.signin2.render('my-signin2', {
@@ -91,11 +91,23 @@ export class LoginComponent implements OnInit {
           
           const id_token = googleUser.getAuthResponse().id_token;
           // console.log( id_token );
-          this._us.loginGoogle( id_token ).subscribe();
+          this._us.loginGoogle( id_token ).subscribe( 
+            resp => this.router.navigateByUrl( '/' )
+          );
+          
 
         }, ( error ) => {
           alert( JSON.stringify(error.error, undefined, 2) );
         });
+  }
+
+
+  campoNoValido( campo: string ){
+
+    if( !this.loginForm.get( campo ).valid  && this.formSumitted ){
+      return true;  
+    }
+    return false;
   }
 
 }
