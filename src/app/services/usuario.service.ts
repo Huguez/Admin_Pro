@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { of } from 'rxjs';
 import { tap, map, catchError } from 'rxjs/operators';
 
@@ -10,13 +10,33 @@ import { RegisterForm } from '../interfaces/register-form';
 
 const base_url = environment.base_url;
 
+declare const gapi:any;
+
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
 
-  constructor( private http: HttpClient ){ }
+  public auth2:any;
+
+  constructor( private http: HttpClient, private ngZone: NgZone ){ 
+    this.initGoogle();
+  }
+
   
+  initGoogle(){
+
+    gapi.load('auth2', () => {
+      // Retrieve the singleton for the GoogleAuth library and set up the client.
+      this.auth2 = gapi.auth2.init({
+        client_id: '624122287896-jqnav46er0cs578ukts03tdr33n5e8k5.apps.googleusercontent.com',
+        cookiepolicy: 'single_host_origin',  
+      });
+
+    });
+
+  }
+
   validarToken(){
     const token = localStorage.getItem('token') || '';
     
@@ -31,7 +51,6 @@ export class UsuarioService {
       } ), catchError( error => of( false ) )
      )
   }
-
 
   crearUsuario( formData: RegisterForm ){
     return this.http.post( `${ base_url }/usuarios`, formData ).pipe( 
@@ -63,5 +82,16 @@ export class UsuarioService {
      );
   }
 
+  logout(){
+    localStorage.removeItem( 'token' );
+
+    // this.auth2 = gapi.auth2.getAuthInstance();
+
+    this.auth2.signOut().then( () => {
+      this.ngZone.run( () => {
+        console.log('logout');
+      } )
+    });
+  }
 
 }
