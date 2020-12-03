@@ -10,14 +10,16 @@ declare function customInitFunction();
   ]
 })
 export class PagesComponent implements OnInit {
-
+  
+  public year : any;
   
   constructor(private ss: SettingsService ) { }
 
   ngOnInit(): void {
     
     customInitFunction();
-
+    // this.year = ( new Date() ).getFullYear(); 
+    this.year = 2020;
   }
 
 }

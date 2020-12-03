@@ -7,6 +7,7 @@ import { environment } from '../../environments/environment';
 
 import { LoginForm } from '../interfaces/login-form';
 import { RegisterForm } from '../interfaces/register-form';
+import { Usuario } from '../models/usuario.model';
 
 const base_url = environment.base_url;
 
@@ -18,6 +19,7 @@ declare const gapi:any;
 export class UsuarioService {
 
   public auth2:any;
+  public usuario:Usuario;
 
   constructor( private http: HttpClient, private ngZone: NgZone ){ 
     this.initGoogle();
@@ -46,7 +48,20 @@ export class UsuarioService {
       headers: { 'x-token': token } 
     } ).pipe( 
       tap( ( resp:any ) => {
+        
+        const { 
+          nombre,
+          email,
+          password,
+          img,
+          google,
+          role,
+          id } = resp.usuario;
+        
+          this.usuario = new Usuario( nombre, email, "", img, google, role, id  );
+
         localStorage.setItem( 'token', resp.token );
+
       } ),
       map( ( resp:any ) => {
         return true
