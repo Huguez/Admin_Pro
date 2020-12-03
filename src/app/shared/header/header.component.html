@@ -166,7 +166,7 @@
                                     <div class="u-img"><img [src]="imgUrl" alt="user"></div>
                                     <div class="u-text">
                                         <h4>{{ nombreUsuario }}</h4>
-                                        <p class="text-muted">{{ emailUsuario }}</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                                        <p class="text-muted">{{ emailUsuario  | slice:0:16 }} {{ ( emailUsuario.length > 16 ) ? '...' : '' }} </p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
                                 </div>
                             </li>
                             <li role="separator" class="divider"></li>

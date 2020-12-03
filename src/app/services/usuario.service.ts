@@ -47,13 +47,12 @@ export class UsuarioService {
     return this.http.get( `${ base_url }/login/renew` , {
       headers: { 'x-token': token } 
     } ).pipe( 
-      tap( ( resp:any ) => {
-        
+      map( ( resp:any ) => {
         const { 
           nombre,
           email,
           password,
-          img,
+          img = '',
           google,
           role,
           id } = resp.usuario;
@@ -61,12 +60,10 @@ export class UsuarioService {
           this.usuario = new Usuario( nombre, email, "", img, google, role, id  );
 
         localStorage.setItem( 'token', resp.token );
-
+        return true;
       } ),
-      map( ( resp:any ) => {
-        return true
-      } ), catchError( error => of( false ) )
-     )
+      catchError( error => of( false ) )
+    )
   }
 
   crearUsuario( formData: RegisterForm ){
