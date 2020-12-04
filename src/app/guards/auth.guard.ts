@@ -10,11 +10,7 @@ export class AuthGuard implements CanActivate {
   
   constructor( private _us: UsuarioService, private router: Router ){ }
 
-  canActivate(
-    route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
-    
-    
-    
+  canActivate( route: ActivatedRouteSnapshot, state: RouterStateSnapshot ){
     
     return this._us.validarToken().pipe( tap( ( isAuth ) => {
       if( !isAuth ){

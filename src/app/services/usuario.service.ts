@@ -19,13 +19,20 @@ declare const gapi:any;
 export class UsuarioService {
 
   public auth2:any;
-  public usuario:Usuario;
+  public usuario: Usuario;
 
   constructor( private http: HttpClient, private ngZone: NgZone ){ 
     this.initGoogle();
   }
-
   
+  get token(): string {
+    return localStorage.getItem('token') || '';
+  }
+  
+  get uid(): string {
+    return this.usuario.id;
+  }
+
   initGoogle(){
     return new Promise( resolve => {
       
@@ -42,12 +49,12 @@ export class UsuarioService {
   }
 
   validarToken(){
-    const token = localStorage.getItem('token') || '';
     
     return this.http.get( `${ base_url }/login/renew` , {
-      headers: { 'x-token': token } 
+      headers: { 'x-token': this.token } 
     } ).pipe( 
       map( ( resp:any ) => {
+        
         const { 
           nombre,
           email,
@@ -55,11 +62,13 @@ export class UsuarioService {
           img = '',
           google,
           role,
-          id } = resp.usuario;
-        
-          this.usuario = new Usuario( nombre, email, "", img, google, role, id  );
-
+          id 
+        } = resp.usuario;
+          
+        this.usuario = new Usuario( nombre, email, "", img, google, role, id  ); 
+       
         localStorage.setItem( 'token', resp.token );
+        
         return true;
       } ),
       catchError( error => of( false ) )
@@ -78,7 +87,6 @@ export class UsuarioService {
   login( formData: LoginForm ){
     return this.http.post( `${ base_url }/login`, formData ).pipe( 
       tap( ( resp:any ) => {
-        console.log( formData );
         
         localStorage.setItem( 'token', resp.token );
       } )
@@ -99,12 +107,23 @@ export class UsuarioService {
   logout(){
     localStorage.removeItem( 'token' );
 
-    // this.auth2 = gapi.auth2.getAuthInstance();
-
     this.auth2.signOut().then( () => {
       this.ngZone.run( () => {
         console.log('logout');
       } )
+    });
+  }
+
+  actualizarPerfil( data: { email:string, nombre:string, role: string } ){
+    data = {
+      ...data,
+      role: this.usuario.role
+    };
+    
+    return this.http.put( `${ base_url }/usuarios/${ this.uid }`, data, { 
+      headers: {
+        'x-token': this.token
+      }
     });
   }
 
