@@ -26,11 +26,13 @@ export class FileuploadService {
       } );
 
       const data = await resp.json();
-
-      console.log( data );
-    
-      return 'nombre de la imagen';
       
+      if( data.ok ){
+        return data;
+      }
+
+      return "no-imagen.png";
+
     }catch( error ){
       console.log(error);
       return false;

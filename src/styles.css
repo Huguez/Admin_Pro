@@ -9,3 +9,8 @@
 #themecolors .selector, .cursor{
     cursor: pointer;
 }
+
+.img-avatar{
+    width: 70%;
+    height: 70%;
+}

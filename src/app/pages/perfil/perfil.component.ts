@@ -4,6 +4,8 @@ import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../models/usuario.model';
 import { FileuploadService } from '../../services/fileupload.service';
 
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
@@ -15,10 +17,10 @@ export class PerfilComponent implements OnInit {
   public perfilForm:   FormGroup;
   public usuario:      Usuario;
   public imagenSubida: File;
+  public imgTemp:      any; 
 
   constructor( private fb:FormBuilder, private _us: UsuarioService, private _fs: FileuploadService ){ 
     this.usuario = _us.usuario;
-
   }
 
   ngOnInit(): void {
@@ -30,21 +32,48 @@ export class PerfilComponent implements OnInit {
 
   actuaizarPerfil(){
     this._us.actualizarPerfil( this.perfilForm.value ).subscribe( ( resp:any ) => {
-      console.log( resp.usuario );
+      
       this.usuario.nombre = resp.usuario.nombre;
       this.usuario.email = resp.usuario.email;
+      
+      Swal.fire( 'Guardado', 'Cambios Generados', 'success');
+
+    }, (error) => {
+      
+       Swal.fire( 'Error!!!', error.error.msg+" !!!", 'error' );
     } );
     
   }
 
-  cambiarImagen( file: any ){
-    this.imagenSubida = file.target.files[0];
+  cambiarImagen( f: any ){
+    this.imagenSubida = f.target.files[0];
+    const file = f.target.files[0];
+    
+    if( !f ){
+      return this.imgTemp = null;
+    }
+    
+    const reader  = new FileReader();
+    // const url64 = reader.readAsDataURL( file );
+    
+    reader.onloadend = () => {
+      this.imgTemp = reader.result;
+      console.log( reader.result );
+    }
+
+
   }
 
-  subirImagen(){
-    console.log( this.imagenSubida );
-    
-    this._fs.actualizarFoto( this.imagenSubida, 'usuarios', this.usuario.id ).then( resp => console.log( resp )
-     );
+  subirImagen(){    
+    this._fs.actualizarFoto( this.imagenSubida, 'usuarios', this.usuario.id ).then( resp => {
+        this._us.usuario.img = resp.nombreArchivo
+        Swal.fire( 'Guardado!!!', 'Imagen subida con exito', 'success');
+      } ).catch( error => {
+        console.log( error );
+        Swal.fire( 'Error!!!', 'No se pudo subir la imagen', 'error' );
+      } 
+    )
   }
+
+
 }
