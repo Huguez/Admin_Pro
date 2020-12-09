@@ -130,8 +130,13 @@ export class UsuarioService {
   }
 
   cargarUsuarios( desde: number = 0 ){
-
-    return this.http.get( `${ base_url }/usuarios?desde=${ desde }&hasta=2`, this.headers );
+    return this.http.get( `${ base_url }/usuarios?desde=${ desde }&hasta=2`, this.headers ).pipe(
+      map( ( resp: any ) => {
+          const usuarios = resp.usuarios.map( user => new Usuario( user.nombre, user.email, '', user.img, user.google, user.role, user.id ) );
+          const total = resp.total;
+        return { total, usuarios };
+      })
+    )
   }
 
 }

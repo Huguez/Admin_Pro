@@ -15,17 +15,17 @@ export class Usuario {
     ){}
 
     get getImagen(){
-        // upload/usuarios/burger-logo_94e6fc80-5434-9a72-8770a1320913.png
-        if( this.img.includes('http') ){
+        
+        if( !this.img ){
+            return `${ base_url }/upload/usuarios/no-img`;
+        }else if( this.img.includes('http') ){
             return this.img;
-        }
-
-        if( this.img ){
-            
+        }else if( this.img ){
             return `${ base_url }/upload/usuarios/${ this.img }`;
+        }else {
+            return `${ base_url }/upload/usuarios/no-img`;
         }
 
-        return `${ base_url }/upload/usuarios/no-img`;
     }
 
     get getNombre(){

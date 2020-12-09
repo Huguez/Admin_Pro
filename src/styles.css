@@ -16,6 +16,12 @@
 }
 
 .img-min-avatar{
-    width: 30%;
-    height: 30%;
+    width:  75%;
+    height: 75%;
+    border-radius: 100%;
+    border: 1px solid grey;
+}
+
+.w100 {
+    width: 100px;
 }
