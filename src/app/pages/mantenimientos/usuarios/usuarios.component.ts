@@ -10,19 +10,40 @@ import { UsuarioService } from '../../../services/usuario.service';
 export class UsuariosComponent implements OnInit, OnDestroy {
   
   public usuarios: any;
+  public desde: number = 2;
+  public hasta: number = 3;
+  public total: number = 0;
 
   constructor( private _us:UsuarioService ) { }
 
   ngOnInit(): void {
-    this._us.cargarUsuarios(0).subscribe( ( resp:any ) => {
+    this.cargarUsuarios();
+  }
+
+  ngOnDestroy(): void {}
+  
+  cargarUsuarios(){
+    this._us.cargarUsuarios( this.desde ).subscribe( ( resp:any ) => {
+      
       this.usuarios = resp.usuarios;
-      console.log(resp.usuarios );
+      this.total = resp.total;
+
+      // console.log(resp.usuarios );
     });
-
   }
 
-  ngOnDestroy(): void {
-    this._us.cargarUsuarios();
-  }
+  cambiarDesde( valor ){
+    this.desde += valor;
+    
+    if( this.desde < 0 ){
+      this.desde = 0;
+    }
+    
+    if( this.desde >= this.total ){
+      // this.desde = this.total;
+      this.desde -= valor;
+    }
 
+    this.cargarUsuarios();
+  }
 }

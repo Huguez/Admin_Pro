@@ -129,9 +129,9 @@ export class UsuarioService {
     return this.http.put( `${ base_url }/usuarios/${ this.uid }`, data, this.headers );
   }
 
-  cargarUsuarios(desde: number = 0, hasta:number = 5 ){
+  cargarUsuarios( desde: number = 0 ){
 
-    return this.http.get( `${ base_url }/usuarios?desde=${ desde }`, this.headers );
+    return this.http.get( `${ base_url }/usuarios?desde=${ desde }&hasta=2`, this.headers );
   }
 
 }
