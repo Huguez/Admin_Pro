@@ -33,6 +33,15 @@ export class UsuarioService {
     return this.usuario.id;
   }
 
+  get headers(){
+    return {
+      headers: {
+        'x-token': this.token
+      }
+    };
+
+  }
+
   initGoogle(){
     return new Promise( resolve => {
       
@@ -50,9 +59,7 @@ export class UsuarioService {
 
   validarToken(){
     
-    return this.http.get( `${ base_url }/login/renew` , {
-      headers: { 'x-token': this.token } 
-    } ).pipe( 
+    return this.http.get( `${ base_url }/login/renew` , this.headers ).pipe( 
       map( ( resp:any ) => {
         
         const { 
@@ -82,7 +89,6 @@ export class UsuarioService {
       } )
      );
   }
-
 
   login( formData: LoginForm ){
     return this.http.post( `${ base_url }/login`, formData ).pipe( 
@@ -120,11 +126,12 @@ export class UsuarioService {
       role: this.usuario.role
     };
     
-    return this.http.put( `${ base_url }/usuarios/${ this.uid }`, data, { 
-      headers: {
-        'x-token': this.token
-      }
-    });
+    return this.http.put( `${ base_url }/usuarios/${ this.uid }`, data, this.headers );
+  }
+
+  cargarUsuarios(desde: number = 0, hasta:number = 5 ){
+
+    return this.http.get( `${ base_url }/usuarios?desde=${ desde }`, this.headers );
   }
 
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { UsuarioService } from '../../../services/usuario.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -6,11 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styles: [
   ]
 })
-export class UsuariosComponent implements OnInit {
+export class UsuariosComponent implements OnInit, OnDestroy {
+  
+  public usuarios: any;
 
-  constructor() { }
+  constructor( private _us:UsuarioService ) { }
 
   ngOnInit(): void {
+    this._us.cargarUsuarios(0).subscribe( ( resp:any ) => {
+      this.usuarios = resp.usuarios;
+      console.log(resp.usuarios );
+    });
+
+  }
+
+  ngOnDestroy(): void {
+    this._us.cargarUsuarios();
   }
 
 }

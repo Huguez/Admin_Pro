@@ -1,7 +1,6 @@
 
-<div class="row  animated fadeIn fast">
+<div *ngIf="!usuarios" class="row  animated fadeIn fast">
     <div class="col-12">
-
         <div class="text-center">
             <div class="alert alert-success" role="alert">
                 <h4 class="alert-heading">Cargando...</h4>
@@ -9,34 +8,27 @@
                 <p class="mb-0">Por favor espere.</p>
             </div>
         </div>
-
-
     </div>
 </div>
 
-<div class="row animated fadeIn fast">
+<div *ngIf="usuarios" class="row animated fadeIn fast">
     <div class="col-12">
 
         <div class="card">
             <div class="card-body">
                 <input type="text" class="form-control"  placeholder="Buscar Usuario..."/>
-
             </div>
         </div>
-
-
-
-
     </div>
 </div>
 
 
-<div class="row animated fadeIn fast">
+<div *ngIf="usuarios" class="row animated fadeIn fast">
     <div class="col-12">
         <div class="card">
             <div class="card-body">                      
-                <h4 class="card-title">Bordered Table</h4>
-                <h6 class="card-subtitle">Add<code>.table-bordered</code>for borders on all sides of the table and cells.</h6>
+                <h4 class="card-title">Total de usuarios: {{ usuarios.length }}</h4>
+                
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
@@ -50,12 +42,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Lunar probe project</td>
-                                <td>Lunar probe project</td>
-                                <td>Lunar probe project</td>
-                                <td>Lunar probe project</td>
-                                <td>Lunar probe project</td>
+                            <tr *ngFor="let usuario of usuarios">
+                                <td>
+                                    <div class="text-center">
+                                        <img *ngIf="usuario.img" [src]="usuario.img" class="img-min-avatar " />
+                                        <img *ngIf="!usuario.img" [src]="usuario.img" class="img-min-avatar " />
+                                    </div>  
+                                </td>
+                                <td>{{ usuario.nombre }}</td>
+                                <td>{{ usuario.email }}</td>
+                                <td>{{ usuario.role }}</td>
+                                <td>
+                                    <span *ngIf="!usuario.google" class="label label-info">E-mail</span>
+                                    <span *ngIf="usuario.google" class="label label-danger">Google</span>
+                                </td>
                                 
                                 <td class="text-nowrap">
                                     <a href="#" data-toggle="tooltip" data-original-title="Editar"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
