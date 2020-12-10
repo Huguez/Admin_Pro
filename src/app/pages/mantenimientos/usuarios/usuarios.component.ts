@@ -71,6 +71,10 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 
   eliminarUsuario( usuario:Usuario ){
     
+    if( usuario.id === this._us.uid ){
+      return Swal.fire( 'Error', 'No puedes auto-borrarte' );
+    }
+    
     Swal.fire({
       title: '¿seguro?',
       text: `¿Estas Seguro de borar a ${ usuario.nombre }?`,
@@ -92,5 +96,13 @@ export class UsuariosComponent implements OnInit, OnDestroy {
       }
     })
 
+  }
+
+  cambiarRol( usuario: Usuario ){
+    this._us.modificarUsuario( usuario ).subscribe(
+      (resp: any) => {
+        this.cargarUsuarios();
+      }
+    );
   }
 }

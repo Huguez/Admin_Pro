@@ -124,9 +124,16 @@ export class UsuarioService {
     data = {
       ...data,
       role: this.usuario.role
-    };
-    
+    }
+
     return this.http.put( `${ base_url }/usuarios/${ this.uid }`, data, this.headers );
+  }
+  
+  modificarUsuario( usuario: Usuario ){
+    const url = `${ base_url }/usuarios/${ usuario.id }`;
+    // console.log(url);
+    
+    return this.http.put( `${ base_url }/usuarios/${ usuario.id }`, usuario, this.headers );
   }
 
   cargarUsuarios( desde: number = 0, hasta: number = 2 ){
