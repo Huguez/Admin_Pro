@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UsuarioService } from '../../../services/usuario.service';
 import { BusquedaService } from '../../../services/busqueda.service';
+import { Usuario } from '../../../models/usuario.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuarios',
@@ -67,4 +69,28 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     );
   }
 
+  eliminarUsuario( usuario:Usuario ){
+    
+    Swal.fire({
+      title: '¿seguro?',
+      text: `¿Estas Seguro de borar a ${ usuario.nombre }?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, Borrar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._us.eliminarUsuario( usuario ).subscribe( ( resp:any ) => {
+          Swal.fire(
+            'Borrado!',
+            `Se ha Borrado a ${ usuario.nombre }.`,
+            'success'
+          )
+          this.cargarUsuarios();
+        });
+      }
+    })
+
+  }
 }
