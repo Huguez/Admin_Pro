@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UsuarioService } from '../../../services/usuario.service';
+import { BusquedaService } from '../../../services/busqueda.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -10,11 +11,12 @@ import { UsuarioService } from '../../../services/usuario.service';
 export class UsuariosComponent implements OnInit, OnDestroy {
   
   public usuarios: any;
-  public desde: number = 2;
-  public hasta: number = 3;
+  public desde: number = 0;
+  public hasta: number = 2;
   public total: number = 0;
+  public cargando: boolean = true;
 
-  constructor( private _us:UsuarioService ) { }
+  constructor( private _us:UsuarioService, private _bs: BusquedaService   ) { }
 
   ngOnInit(): void {
     this.cargarUsuarios();
@@ -23,12 +25,13 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {}
   
   cargarUsuarios(){
+    this.cargando = true;
     this._us.cargarUsuarios( this.desde ).subscribe( ( resp:any ) => {
       
       this.usuarios = resp.usuarios;
       this.total = resp.total;
-
       // console.log(resp.usuarios );
+      this.cargando = false;
     });
   }
 
@@ -46,4 +49,18 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 
     this.cargarUsuarios();
   }
+
+  buscarUsuario( termino: string ){
+    if( termino === '' ){
+      return ;
+    }
+    this._bs.buscar( 'usuarios', termino ).subscribe( 
+      ( result: any ) => {
+        console.log( result );
+        this.usuarios = result;
+      }
+    );
+  }
+
+
 }
