@@ -11,6 +11,7 @@ import { BusquedaService } from '../../../services/busqueda.service';
 export class UsuariosComponent implements OnInit, OnDestroy {
   
   public usuarios: any;
+  public usuariosTemp: any;
   public desde: number = 0;
   public hasta: number = 2;
   public total: number = 0;
@@ -29,6 +30,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     this._us.cargarUsuarios( this.desde ).subscribe( ( resp:any ) => {
       
       this.usuarios = resp.usuarios;
+      this.usuariosTemp = resp.usuarios;
       this.total = resp.total;
       // console.log(resp.usuarios );
       this.cargando = false;
@@ -51,16 +53,18 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   }
 
   buscarUsuario( termino: string ){
-    if( termino === '' ){
-      return ;
+    if( termino.length === 0 ){
+      this.usuarios = this.usuariosTemp;
+      return;
     }
+
     this._bs.buscar( 'usuarios', termino ).subscribe( 
       ( result: any ) => {
         console.log( result );
         this.usuarios = result;
+        this.total = result.length;
       }
     );
   }
-
 
 }
