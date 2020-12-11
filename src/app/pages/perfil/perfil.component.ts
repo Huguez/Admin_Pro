@@ -49,18 +49,17 @@ export class PerfilComponent implements OnInit {
     this.imagenSubida = f.target.files[0];
     const file = f.target.files[0];
     
-    if( !f ){
+    if( !file ){
       return this.imgTemp = null;
     }
     
     const reader  = new FileReader();
-    // const url64 = reader.readAsDataURL( file );
     
     reader.onloadend = () => {
       this.imgTemp = reader.result;
-      console.log( reader.result );
     }
-
+    
+    console.log( file );
 
   }
 

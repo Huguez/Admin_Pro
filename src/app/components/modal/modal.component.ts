@@ -9,6 +9,9 @@ import { ModalImagenService } from '../../services/modal-imagen.service';
 })
 export class ModalComponent implements OnInit {
 
+  public imagenSubida: File;
+  public imgTemp:      any; 
+
   
   constructor( public mis:ModalImagenService ) { }
 
@@ -16,8 +19,27 @@ export class ModalComponent implements OnInit {
   }
   
   cerraModal(){
+    this.imgTemp = null;
     this.mis.cerraModal(); 
   }
   
+  
+  cambiarImagen( file: File ){
+    this.imagenSubida = file;
+    
+    if( !this.imagenSubida ){
+      return this.imgTemp = null;
+    }
+    
+    const reader = new FileReader();
+    
+    reader.onloadend = () => {
+      this.imgTemp = reader.result;  
+    }
+    
+    console.log( this.imagenSubida );
+    
+    
+  }
 
 }

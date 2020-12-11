@@ -12,6 +12,13 @@
                 </div>
                 <div class="modal-body">
                     <h4>Seleccione una Imagen</h4>
+
+                    <div class="text-center">
+                        <img *ngIf="imgTemp" [src]="mis.img" class="img-avatar mb-5" />
+                        <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar mb-5" />
+                    </div>
+
+                    <input type="file" (change)="cambiarImagen($event.target.files[0])" />
                     
                 </div>
                 <div class="modal-footer">

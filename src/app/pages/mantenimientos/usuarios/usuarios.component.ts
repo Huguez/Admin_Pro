@@ -96,7 +96,6 @@ export class UsuariosComponent implements OnInit, OnDestroy {
         });
       }
     })
-
   }
 
   cambiarRol( usuario: Usuario ){
@@ -106,11 +105,10 @@ export class UsuariosComponent implements OnInit, OnDestroy {
       }
     );
   }
-
   
   abrirModal( user: Usuario ){
-    console.log( user );
-    this._mis.abrirModal();
+    this._mis.abrirModal('usuarios', user.id, user.img );
+    // console.log( user );
     
   }
 
