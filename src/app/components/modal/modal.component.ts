@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalImagenService } from '../../services/modal-imagen.service';
+import Swal from 'sweetalert2';
+import { FileuploadService } from '../../services/fileupload.service';
 
 @Component({
   selector: 'app-modal',
@@ -13,7 +15,7 @@ export class ModalComponent implements OnInit {
   public imgTemp:      any; 
 
   
-  constructor( public mis:ModalImagenService ) { }
+  constructor( public mis:ModalImagenService, private _fs: FileuploadService ) { }
 
   ngOnInit(): void {
   }
@@ -32,14 +34,30 @@ export class ModalComponent implements OnInit {
     }
     
     const reader = new FileReader();
-    
+    reader.readAsDataURL( file );
+
     reader.onloadend = () => {
       this.imgTemp = reader.result;  
     }
-    
-    console.log( this.imagenSubida );
-    
-    
+
   }
+
+  subirImagen(){
+    const id = this.mis.id;
+    const tipo = this.mis.tipo;
+
+    this._fs.actualizarFoto( this.imagenSubida, tipo, id ).then( resp => {
+        
+      Swal.fire( 'Guardado!!!', 'Imagen subida con exito', 'success');
+      this.mis.imagenDone.emit( resp );
+      this.cerraModal();
+
+    } ).catch( error => {
+      console.log( error );
+      Swal.fire( 'Error!!!', 'No se pudo subir la imagen', 'error' );
+    } )
+
+  }
+
 
 }

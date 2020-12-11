@@ -4,6 +4,8 @@ import { BusquedaService } from '../../../services/busqueda.service';
 import { Usuario } from '../../../models/usuario.model';
 import Swal from 'sweetalert2';
 import { ModalImagenService } from '../../../services/modal-imagen.service';
+import { delay } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-usuarios',
@@ -19,14 +21,18 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   public hasta: number = 2;
   public total: number = 0;
   public cargando: boolean = true;
+  private imgSubs: Subscription;
 
   constructor( private _us:UsuarioService, private _bs: BusquedaService, private _mis:ModalImagenService ) { }
 
   ngOnInit(): void {
     this.cargarUsuarios();
+    this.imgSubs = this._mis.imagenDone.pipe( delay( 1000 ) ).subscribe( img => this.cargarUsuarios() );
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.imgSubs.unsubscribe();
+  }
   
   cargarUsuarios(){
     this.cargando = true;
@@ -48,7 +54,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     }
     
     if( this.desde >= this.total ){
-      // this.desde = this.total;
+      
       this.desde -= valor;
     }
 
@@ -108,7 +114,6 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   
   abrirModal( user: Usuario ){
     this._mis.abrirModal('usuarios', user.id, user.img );
-    // console.log( user );
     
   }
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Usuario } from '../models/usuario.model';
 
 @Injectable({
@@ -7,9 +7,11 @@ import { Usuario } from '../models/usuario.model';
 export class ModalImagenService {
   
   private _ocultarModal: boolean = true;
-  public tipo: string;
+  public tipo: 'usuarios'|'medicos'|'hospitales';
   public id: string;
   public img: string;
+
+  public imagenDone: EventEmitter<string> = new EventEmitter<string>();
   
   private base_url = "http://localhost:3005/api/upload";
   

@@ -14,7 +14,7 @@
                     <h4>Seleccione una Imagen</h4>
 
                     <div class="text-center">
-                        <img *ngIf="imgTemp" [src]="mis.img" class="img-avatar mb-5" />
+                        <img *ngIf="!imgTemp" [src]="mis.img" class="img-avatar mb-5" />
                         <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar mb-5" />
                     </div>
 
@@ -23,7 +23,7 @@
                 </div>
                 <div class="modal-footer">
                     <button (click)="cerraModal()" type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <button (click)="subirImagen()" type="button" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
         </div>

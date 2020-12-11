@@ -54,13 +54,12 @@ export class PerfilComponent implements OnInit {
     }
     
     const reader  = new FileReader();
+    reader.readAsDataURL( file );
     
     reader.onloadend = () => {
       this.imgTemp = reader.result;
     }
     
-    console.log( file );
-
   }
 
   subirImagen(){    
