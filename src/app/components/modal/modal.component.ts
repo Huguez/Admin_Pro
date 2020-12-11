@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalImagenService } from '../../services/modal-imagen.service';
 
 @Component({
   selector: 'app-modal',
@@ -8,14 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModalComponent implements OnInit {
 
-  public oculto: boolean = true;
-
-  constructor() { }
+  
+  constructor( public mis:ModalImagenService ) { }
 
   ngOnInit(): void {
   }
   
   cerraModal(){
-    this.oculto = false;
+    this.mis.cerraModal(); 
   }
+  
+
 }

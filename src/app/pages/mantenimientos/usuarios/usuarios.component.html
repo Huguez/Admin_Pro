@@ -48,12 +48,11 @@
                                 
                                 <td>
                                     <div class=" w100 text-center">
-                                        <img [src]="usuario.getImagen" class="img-min-avatar " />
+                                        <img [src]="usuario.getImagen" class="img-min-avatar cursor"  (click)="abrirModal( usuario )" />
                                     </div>  
                                 </td>
 
                                 <td>{{ usuario.nombre }}</td>
-
                                 <td>{{ usuario.email }}</td>
                                 
                                 <td class="w150">

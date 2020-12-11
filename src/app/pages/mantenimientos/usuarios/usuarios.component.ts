@@ -3,6 +3,7 @@ import { UsuarioService } from '../../../services/usuario.service';
 import { BusquedaService } from '../../../services/busqueda.service';
 import { Usuario } from '../../../models/usuario.model';
 import Swal from 'sweetalert2';
+import { ModalImagenService } from '../../../services/modal-imagen.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -19,7 +20,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   public total: number = 0;
   public cargando: boolean = true;
 
-  constructor( private _us:UsuarioService, private _bs: BusquedaService   ) { }
+  constructor( private _us:UsuarioService, private _bs: BusquedaService, private _mis:ModalImagenService ) { }
 
   ngOnInit(): void {
     this.cargarUsuarios();
@@ -105,4 +106,12 @@ export class UsuariosComponent implements OnInit, OnDestroy {
       }
     );
   }
+
+  
+  abrirModal( user: Usuario ){
+    console.log( user );
+    this._mis.abrirModal();
+    
+  }
+
 }
