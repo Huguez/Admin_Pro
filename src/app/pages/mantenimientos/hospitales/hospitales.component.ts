@@ -7,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
   ]
 })
 export class HospitalesComponent implements OnInit {
-
+  
+  public cargando: boolean = true;
+  public hospitales: any;
+  public desde: any;
+  
   constructor() { }
 
   ngOnInit(): void {
