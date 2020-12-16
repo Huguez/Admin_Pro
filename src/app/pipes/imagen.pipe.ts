@@ -11,16 +11,15 @@ export class ImagenPipe implements PipeTransform {
   transform( img: string, tipo: 'usuarios'|'medicos'|'hospitales' ): string {
 
     if( !img ){
-      return `${ base_url }/upload/usuarios/no-img`;
+      return `${ base_url }/upload/${tipo}/no-img`;
     }else if( img.includes('http') ){
         return img;
     }else if( img ){
-        return `${ base_url }/upload/usuarios/${ img }`;
+        return `${ base_url }/upload/${tipo}/${ img }`;
     }else {
-        return `${ base_url }/upload/usuarios/no-img`;
+        return `${ base_url }/upload/${tipo}/no-img`;
     }
     
-    // return 'Hola Mundo  ' + `${img} - ${ tipo }`;
   }
 
 }

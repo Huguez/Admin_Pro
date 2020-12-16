@@ -29,8 +29,6 @@ export class ModalImagenService {
     }else {
       this.img = `${ this.base_url }/${ tipo }/${ img }`;
     }
-    console.log(this.img);
-    
   }
 
   cerraModal(){

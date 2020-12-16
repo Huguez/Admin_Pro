@@ -38,7 +38,7 @@
 
                     <div class="col">
                         <div class="text-right">
-                            <button class="btn btn-primary">
+                            <button (click)="crear()" class="btn btn-primary">
                                 <i class="fa fa-hospital-o" ></i>
                                 Crear Hospital
                             </button>
@@ -60,7 +60,7 @@
                             <tr *ngFor="let hospital of hospitales; let i = index ">
                                 <td>
                                     <div class=" w100 text-center">
-                                        <img src="{{ hospital.img | imagen:'hospitales' }}" class="img-min-avatar cursor"  />
+                                        <img src="{{ hospital.img | imagen:'hospitales' }}" class="img-min-avatar cursor" (click)="abrirModal(hospital)" />
                                     </div>  
                                 </td>
 
@@ -68,8 +68,8 @@
                                 
                                 
                                 <td class="text-nowrap w100 text-center ">
-                                    <a data-toggle="tooltip" data-original-title="Editar"><i class="fa fa-pencil text-inverse m-r-10"></i></a>
-                                    <a data-toggle="tooltip" data-original-title="Borrar" ><i class="fa fa-close text-danger"></i></a>
+                                    <a (click)="guardarCambios(hospital)" data-toggle="tooltip" data-original-title="Editar"><i class="fa fa-pencil text-inverse m-r-10"></i></a>
+                                    <a (click)="eliminar(hospital)" data-toggle="tooltip" data-original-title="Borrar" ><i class="fa fa-close text-danger"></i></a>
                                 </td>
                             </tr>
 
