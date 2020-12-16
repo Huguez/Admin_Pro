@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { ModalImagenService } from '../../../services/modal-imagen.service';
 import { Subscription } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { BusquedaService } from '../../../services/busqueda.service';
 
 @Component({
   selector: 'app-hospitales',
@@ -18,8 +19,9 @@ export class HospitalesComponent implements OnInit, OnDestroy {
   public hospitales: Hospital[];
   public desde: any;
   public imgSubs: Subscription;
+  private HospitalesTemp: Hospital[];
 
-  constructor(private _hs:HospitalesService, private _mis:ModalImagenService ) { }
+  constructor( private _bs: BusquedaService, private _hs:HospitalesService, private _mis:ModalImagenService ) { }
 
   ngOnInit(): void {
     this.cargarHospitales();
@@ -29,31 +31,55 @@ export class HospitalesComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.imgSubs.unsubscribe();
   }
+  
+  buscar( termino: string ){
+    if( termino.length === 0 ){
+      this.hospitales = this.HospitalesTemp;
+      return;
+    }
+
+    this._bs.buscar( 'hospitales', termino ).subscribe( ( result: any ) => {
+        console.log( result );
+        this.hospitales = result;
+      }
+    );    
+  }
+
 
   cargarHospitales(){
     this.cargando = true;
     this._hs.cargarHospitales().subscribe( hospitales => {     
       
       this.hospitales = hospitales;
+      this.HospitalesTemp = hospitales;
       this.cargando = false;
     });
   }
 
   guardarCambios( hospital: any ){
     this._hs.actualizarHospital( hospital._id, hospital.nombre ).subscribe( (resp:any) => {
-      // console.log( resp );
       Swal.fire('Actualizado', hospital.nombre, 'success' );
       this.cargarHospitales();
     });
   }
   
   eliminar( hospital:any ){
-    this._hs.deleteHospital( hospital._id ).subscribe( (resp:any) => {
-      // console.log( resp );
-      Swal.fire('Borrado!!', hospital.nombre, 'success' );
-      this.cargarHospitales();
-    } );
-
+    Swal.fire({
+      title: '¿seguro?',
+      text: `¿Estas Seguro de borar a ${ hospital.nombre }?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, Borrar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this._hs.deleteHospital( hospital._id ).subscribe( (resp:any) => {
+          Swal.fire('Borrado!!', hospital.nombre, 'success' );
+          this.cargarHospitales();
+        } ); 
+      }
+    });
   }
   
   abrirModal( hospital:any ){

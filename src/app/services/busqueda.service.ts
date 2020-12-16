@@ -27,9 +27,12 @@ export class BusquedaService {
   }
 
   private trasformarUsuarios( result: any[] ):Usuario[] {
-    
     return result.map( 
       ( user: any ) =>  new Usuario( user.nombre, user.email, '', user.img, user.google, user.role, user.id ) );
+  }
+
+  private trasformarHospital( result: any[] ):Usuario[] {
+    return result;
   }
 
   buscar( tipo: 'usuarios'|'medicos'|'hospitales', termino: string ){
@@ -44,7 +47,7 @@ export class BusquedaService {
           case 'medicos':
             break;
           case 'hospitales':
-            break;
+            return this.trasformarHospital( resp.result );
           default:
             return [];
         }
