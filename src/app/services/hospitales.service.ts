@@ -27,11 +27,25 @@ export class HospitalesService {
   }
   
   cargarHospitales( desde: number = 0, hasta: number = 2 ){
-    const url = `${ base_url }/hospitales`;
-    return this._http.get( url, this.headers ).pipe(
+    const endpoint = `${ base_url }/hospitales`;
+    return this._http.get( endpoint, this.headers ).pipe(
       map( (resp:{ ok: boolean, hospitales: Hospital[] }) => resp.hospitales )
     );
   }
   
+  crearHospital( nombre: string ){
+    const endpoint = `${ base_url }/hospitales`;
+    return this._http.post( endpoint, { nombre }, this.headers );
+  }
+  
+  actualizarHospital( id: string, nombre:string ){
+    const endpoint = `${ base_url }/hospitales/${ id }`;
+    return this._http.put( endpoint, { nombre }, this.headers );
+  }
+
+  deleteHospital( id: string ){
+    const url = `${ base_url }/hospitales/${ id }`;
+    return this._http.delete( url, this.headers );
+  }
   
 }
