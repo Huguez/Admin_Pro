@@ -12,14 +12,11 @@ import { SharedModule } from './shared/shared.module';
 import { ComponentsModule } from './components/components.module';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
 
     NoPageFoundComponent,
-
-
   ],
   imports: [
     BrowserModule,
@@ -27,7 +24,7 @@ import { ComponentsModule } from './components/components.module';
     PagesModule,
     SharedModule,
     AuthModule,
-    ComponentsModule
+    ComponentsModule,
   ],
   bootstrap: [AppComponent]
 })

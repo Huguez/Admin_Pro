@@ -42,10 +42,9 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let hospital of hospitales; let i = index ">
-                                <!-- [src]="hospital.getImagen" -->
                                 <td>
                                     <div class=" w100 text-center">
-                                        <img  class="img-min-avatar cursor"  />
+                                        <img src="{{ hospital.img | imagen:'hospitales' }}" class="img-min-avatar cursor"  />
                                     </div>  
                                 </td>
 
