@@ -25,9 +25,16 @@ export class MedicosService {
     };
   }
   
-  crearMedico( medico: Medico ){
+  crearMedico( medico: { nombre:string, hospital: string } ){
     const endPoint = `${base_url}/medicos`;
     return this._http.post( endPoint, medico, this.headers );
+  }
+
+  getMedico( id: string ){
+    const endpoint = `${base_url}/medicos/${ id }`;
+    return this._http.get( endpoint, this.headers ).pipe( map( ( resp: { ok: boolean, medico: Medico } ) => {
+      return resp.medico;
+    } ) );
   }
 
   getMedicos(){

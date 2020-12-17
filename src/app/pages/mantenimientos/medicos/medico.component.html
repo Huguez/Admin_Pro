@@ -7,10 +7,10 @@
 
                 <form class="form p-t-20" [formGroup]="medicoForm" (submit)="guardarMedico()">
                     
-                    <div class="row mb-4">
+                    <div class="row mb-4" *ngIf="medicoSeleccionado">
                        <div class="col text-center">
                             <div class="">
-                                <img src="http://localhost:3005/api/upload/usuarios/8770a1320913.png" class="w200" >
+                                <img [src]="medicoSeleccionado | imagen:'medicos'" class="w200" >
                             </div>
                         </div>
                     </div>
@@ -48,19 +48,6 @@
                 <h6 class="card-subtitle"> {{ hospitalSeleccionado.nombre }} </h6>
                 
                 <img [src]="hospitalSeleccionado.img | imagen:'hospitales'" class="img-avatar mb-5" />
-                
-                <!-- <div class="text-center">
-                    <img src="http://localhost:3005/api/upload/usuarios/8770a1320913.png" class="img-avatar mb-5" />
-                </div> -->
-
-                <!-- <input type="file" (change)="cambiarImagen($event)" />
-                
-                <br><br>
-
-                <button type="button" (click)="subirImagen()" [disabled]="!imagenSubida" class="btn btn-success waves-effect waves-light m-r-10">
-                    Cambiar Imagen
-                </button>
-                 -->
             </div>
         </div>
     </div>
