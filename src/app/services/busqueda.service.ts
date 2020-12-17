@@ -14,11 +14,11 @@ export class BusquedaService {
 
   constructor( private http: HttpClient ) { }
   
-  get token(): string {
+  private get token(): string {
     return localStorage.getItem('token') || '';
   }
   
-  get headers(){
+  private get headers(){
     return {
       headers: {
         'x-token': this.token
@@ -45,6 +45,7 @@ export class BusquedaService {
           case 'usuarios':
             return this.trasformarUsuarios( resp.result );
           case 'medicos':
+            return resp.result;
             break;
           case 'hospitales':
             return this.trasformarHospital( resp.result );
