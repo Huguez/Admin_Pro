@@ -32,7 +32,7 @@ export class MedicosService {
 
   getMedico( id: string ){
     const endpoint = `${base_url}/medicos/${ id }`;
-    return this._http.get( endpoint, this.headers ).pipe( map( ( resp: { ok: boolean, medico: Medico } ) =>  resp ) );
+    return this._http.get( endpoint, this.headers ).pipe( map( ( resp: { ok: boolean, medico: Medico } ) =>  resp.medico ) );
   }
 
   getMedicos(){

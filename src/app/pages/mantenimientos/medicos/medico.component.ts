@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { HospitalesService } from '../../../services/hospitales.service';
 import { MedicosService } from '../../../services/medicos.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-medico',
@@ -49,21 +50,17 @@ export class MedicoComponent implements OnInit {
   }
   
   cargarMedico( id: string ){
+    
     if( id === 'nuevo' ){
       return;
     }
 
-    this._ms.getMedico( id ).subscribe( ( resp:any ) => {
-      console.log( resp.ok );
-      
-      if( !resp.ok ){
-        return this.router.navigateByUrl( `/dashboard/medicos` );
-      }
-      
-      this.medicoSeleccionado = resp.medico;
-      const { nombre, hospital } = resp.medico;    
+    this._ms.getMedico( id ).pipe( delay( 100 ) ).subscribe( medico => {  
+      this.medicoSeleccionado = medico;
+      const { nombre, hospital } = medico;    
       this.medicoForm.setValue( { nombre, hospital } );
-    } );
+    }, error => this.router.navigateByUrl( `/dashboard/medicos` ) );
+
   }
 
   guardarMedico(){
