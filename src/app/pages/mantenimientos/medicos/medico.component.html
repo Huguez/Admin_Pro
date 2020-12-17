@@ -7,7 +7,7 @@
                 <h4 class="card-title">Medico</h4>
                 <h6 class="card-subtitle">Informacion</h6>
 
-                <form class="form p-t-20">
+                <form class="form p-t-20" [formGroup]="medicoForm" (submit)="guardarMedico()">
                     
                     <div class="row mb-4">
                        <div class="col text-center">
@@ -22,7 +22,7 @@
                         <label for="exampleInputuname">Nombre</label>
                         <div class="input-group">
                             <div class="input-group-addon"><i class="ti-user"></i></div>
-                            <input type="text" class="form-control" id="exampleInputuname" placeholder="Nombre del Medico">
+                            <input formControlName="nombre" type="text" class="form-control" placeholder="Nombre del Medico">
                         </div>
                     </div>
 
@@ -30,15 +30,13 @@
                         <label for="exampleInputEmail1">Hospital</label>
                         <div class="input-group">
                             <div class="input-group-addon"><i class="fa fa-hospital-o"></i></div>
-                            <select class="form-control">
-                                <option value="wawa" >wawa</option>
-                                <option value="wawa" >wawa</option>
-                                <option value="wawa" >wawa</option>
+                            <select formControlName="hospital" class="form-control">
+                                <option value="" > seleccione una opcion</option>
+                                <option *ngFor="let hospital of hospitales" [value]="hospital._id" > {{ hospital.nombre }} </option>
                             </select>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> <i class="fa fa-save"></i> Guardar</button>
-                    <button type="submit" class="btn btn-inverse waves-effect waves-light">Cancel</button>
+                    <button type="submit" [disabled]="medicoForm.invalid" class="btn btn-block btn-success waves-effect waves-light m-r-10"> <i class="fa fa-save"></i> Guardar</button>
                 </form>
             </div>
         </div>

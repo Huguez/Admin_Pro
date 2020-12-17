@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Hospital } from 'src/app/models/hospital.model';
+import { HospitalesService } from '../../../services/hospitales.service';
 
 @Component({
   selector: 'app-medico',
@@ -9,13 +11,29 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class MedicoComponent implements OnInit {
   
-  public cargando: boolean = true;
-  private _id: string;
+  public medicoForm: FormGroup;
+  public hospitales: Hospital[];
 
-  constructor( private actRou: ActivatedRoute ) { }
+  constructor( private _hs: HospitalesService, private fb:FormBuilder ) { this.cargarHospitales(); }
 
   ngOnInit(): void {
-    this._id =this.actRou.snapshot.paramMap.get( "id" );
+  
+    this.medicoForm = this.fb.group( {
+      nombre: ['', Validators.required ],
+      hospital: ['', Validators.required],
+
+    } )
+  }
+
+  guardarMedico(){
+    console.log( this.medicoForm.value );
+    
+  }
+  
+  cargarHospitales(){
+    this._hs.cargarHospitales().subscribe( ( resp:any ) => {
+      this.hospitales = resp;   
+    });
   }
 
 }
