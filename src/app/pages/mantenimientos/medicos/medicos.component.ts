@@ -5,6 +5,7 @@ import { BusquedaService } from '../../../services/busqueda.service';
 import { ModalImagenService } from '../../../services/modal-imagen.service';
 import { Subscription } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-medicos',
@@ -18,7 +19,9 @@ export class MedicosComponent implements OnInit, OnDestroy {
   public medicos: Medico[];
   private _medicosAux :Medico[];
   private imagenSubs: Subscription;
+  public total:number;
 
+  
   constructor( private _mss: MedicosService, private _bs: BusquedaService, private _mis: ModalImagenService ) { }
 
   ngOnDestroy(): void {
@@ -34,36 +37,46 @@ export class MedicosComponent implements OnInit, OnDestroy {
     this.cargando = true;
     this._mss.getMedicos().subscribe( ( resp:any ) => {
       this.medicos = resp;
+      this.total = resp.length;
       this._medicosAux = resp;
       this.cargando = false;
     } );
   }
   
-  buscar( termino ){
+  buscar( termino:string  ){
     if( termino == ''  ){
       this.medicos = this._medicosAux;
       return ;
     }
-
+    
     this._bs.buscar( 'medicos', termino ).subscribe( ( resp:any ) => {
       if( resp.length == 0 ){
-        this.medicos = this._medicosAux;
+        this.medicos = [];
       }else{
         this.medicos = resp;
+        this.total = resp.length;
       }
     } )
   }
   
   eliminarMedico( medico : Medico ){
-
-  }
-
-  editarMedico( medico: Medico ){
+    Swal.fire({
+        title: '¿seguro?',
+        text: `¿Estas Seguro de borar a ${ medico.nombre }?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, Borrar'
+    }).then( ( result:any ) => {
+      if( result.value ){
+        this._mss.deleteMedico( medico.id ).subscribe( ( resp: any ) => {
+          Swal.fire('Medico Borrado', `${medico.nombre} fue borrado Correctamente`, 'success');
+          this.cargarMedicos();
+        })    
+      }
+    })
     
-    this._mss.actualizarMedico( medico ).subscribe( ( resp:any ) => {
-      console.log( resp );  
-    } );
-
   }
 
   abrirModal( medico: Medico ){

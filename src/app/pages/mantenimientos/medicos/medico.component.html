@@ -1,90 +1,68 @@
 
-<div *ngIf="cargando" class="row  animated fadeIn fast">
-    <div class="col-12">
-        <div class="text-center">
-            <div class="alert alert-success" role="alert">
-                <h4 class="alert-heading">Cargando...</h4>
-                <i class="fa fa-spin fa-refresh fa-2x"></i>
-                <p class="mb-0">Por favor espere.</p>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div *ngIf="cargando" class="row animated fadeIn fast">
-    <div class="col-12">
-
+<div class="row">
+    <div class="col-lg-6">
         <div class="card">
             <div class="card-body">
-                <!-- (keyup)="buscar( termino.value )" #termino -->
-                <input  type="text" class="form-control"  placeholder="Buscar Hospital..." />
-            </div>
-        </div>
-    </div>
-</div>
+                <h4 class="card-title">Medico</h4>
+                <h6 class="card-subtitle">Informacion</h6>
 
-
-<div *ngIf="cargando" class="row animated fadeIn fast">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">                      
-
-                
-                <div class="row ">
-                    <div class="col-8">
-                        <h4 class="card-title">Total de Hospitales:</h4>
-                        <h6 class="card-subtitle">Hospitales registrados</h6>
-                        <!-- <h6 class="card-subtitle">hasta: {{ hasta }}</h6> -->        
-                    </div>
-
-                    <div class="col">
-                        <div class="text-right">
-                            <button class="btn btn-primary">
-                                <i class="fa fa-hospital-o" ></i>
-                                Crear Hospital
-                            </button>
+                <form class="form p-t-20">
+                    
+                    <div class="row mb-4">
+                       <div class="col text-center">
+                            <div class="">
+                                <img src="http://localhost:3005/api/upload/usuarios/8770a1320913.png" class="w200" >
+                            </div>
                         </div>
                     </div>
-                </div>
+                    
 
+                    <div class="form-group">
+                        <label for="exampleInputuname">Nombre</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-user"></i></div>
+                            <input type="text" class="form-control" id="exampleInputuname" placeholder="Nombre del Medico">
+                        </div>
+                    </div>
 
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th class="w100" >Foto</th>
-                                <th>Nombre</th>
-                                <th class=" w100 text-nowrap">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr >
-                                <td>
-                                    <div class=" w100 text-center">
-                                        <img  class="img-min-avatar cursor"  />
-                                    </div>  
-                                </td>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Hospital</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-hospital-o"></i></div>
+                            <select class="form-control">
+                                <option value="wawa" >wawa</option>
+                                <option value="wawa" >wawa</option>
+                                <option value="wawa" >wawa</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> <i class="fa fa-save"></i> Guardar</button>
+                    <button type="submit" class="btn btn-inverse waves-effect waves-light">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
-                                <td> <input type="text" class="form-control" [placeholder]=""  />  </td>
-                                
-                                
-                                <td class="text-nowrap w100 text-center ">
-                                    <a  data-toggle="tooltip" data-original-title="Editar"><i class="fa fa-pencil text-inverse m-r-10"></i></a>
-                                    <a  data-toggle="tooltip" data-original-title="Borrar" ><i class="fa fa-close text-danger"></i></a>
-                                </td>
-                                <!-- (click)="eliminar(hospital)" -->
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Hospital</h4>
                 
-                <!-- <div *ngIf="total" class="text-center" >
-                    <button (click)="cambiarDesde(-2)" class="btn btn-secondary ">Anterior</button>
-                    <button (click)="cambiarDesde(2)" class="btn btn-secondary ml-5">siguiente</button>
-                </div> -->
+                <div class="text-center">
+                    <img src="http://localhost:3005/api/upload/usuarios/8770a1320913.png" class="img-avatar mb-5" />
+                    <!-- <img *ngIf="imgTemp" [src]="imgTemp" class="img-avatar mb-5" /> -->
+                </div>
+
+                <!-- <input type="file" (change)="cambiarImagen($event)" />
+                
+                <br><br>
+
+                <button type="button" (click)="subirImagen()" [disabled]="!imagenSubida" class="btn btn-success waves-effect waves-light m-r-10">
+                    Cambiar Imagen
+                </button>
+                 -->
             </div>
         </div>
     </div>
 </div>
-

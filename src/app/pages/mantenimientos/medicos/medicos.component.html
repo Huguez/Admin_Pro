@@ -30,15 +30,15 @@
 
                 <div class="row ">
                     <div class="col-8">
-                        <h4 class="card-title">Total de Medicos:</h4>
+                        <h4 class="card-title">Total de Medicos: {{ total }} </h4>
                         <h6 class="card-subtitle">Medicos registrados</h6>
                         <!-- <h6 class="card-subtitle">hasta: {{ hasta }}</h6> -->        
                     </div>
 
                     <div class="col">
                         <div class="text-right">
-                            <button class="btn btn-primary">
-                                <i class="fa fa-hospital-o" ></i>
+                            <button [routerLink]="[ '/dashboard/medico/nuevo' ]" class="btn btn-primary">
+                                <i class="fa fa-user-md" ></i>
                                 Crear Medico
                             </button>
                         </div>
@@ -63,15 +63,19 @@
                                     </div>  
                                 </td>
 
-                                <td> {{ medico.nombre }} </td>
+                                <td>
+                                    <a>
+                                        {{ medico.nombre }}
+                                    </a> 
+                                </td>
                                 
                                 <td class="text-nowrap w100 text-center ">
-                                    <a  data-toggle="tooltip" data-original-title="Editar"><i class="fa fa-pencil text-inverse m-r-10"></i></a>
-                                    <a  data-toggle="tooltip" data-original-title="Borrar" ><i class="fa fa-close text-danger"></i></a>
+                                    <a  [routerLink]="['/dashboard/medico', medico.id ]" data-toggle="tooltip" data-original-title="Editar"><i class="fa fa-pencil text-inverse m-r-10"></i></a>
+                                    <a  (click)="eliminarMedico(medico)" data-toggle="tooltip" data-original-title="Borrar" ><i class="fa fa-close text-danger"></i></a>
                                 </td>
                             </tr>
                             <!-- (click)="editarMedico(medico)"
-                            (click)="eliminarMedico(medico)" -->
+                             -->
                         </tbody>
                     </table>
                 </div>
