@@ -30,6 +30,7 @@ export class MedicoComponent implements OnInit {
     private _ms:MedicosService ){}
 
   ngOnInit(): void {
+
     this.actRou.params.subscribe( ( { id } ) => {
       this.cargarMedico( id );
     } );
@@ -42,26 +43,48 @@ export class MedicoComponent implements OnInit {
     } );
 
     this.medicoForm.get('hospital').valueChanges.subscribe( hospitalId => {
-      this.hospitalSeleccionado = this.hospitales.find( h => h._id === hospitalId );
+      this.hospitalSeleccionado = this.hospitales.find( h => h._id === hospitalId  );
     } );
     
   }
   
   cargarMedico( id: string ){
-    this._ms.getMedico( id ).subscribe( (resp:any) => {
-      console.log( resp );
-      // this.medicoSeleccionado = new Medico(resp.nombre, resp.id, resp.img , undefined, resp.hospital );
+    if( id === 'nuevo' ){
+      return;
+    }
+
+    this._ms.getMedico( id ).subscribe( ( resp:any ) => {
+      console.log( resp.ok );
+      
+      if( !resp.ok ){
+        return this.router.navigateByUrl( `/dashboard/medicos` );
+      }
+      
+      this.medicoSeleccionado = resp.medico;
+      const { nombre, hospital } = resp.medico;    
+      this.medicoForm.setValue( { nombre, hospital } );
     } );
   }
 
   guardarMedico(){
-    this._ms.crearMedico( this.medicoForm.value ).subscribe( ( resp: any ) => {
-      if( resp.ok ){
-        
-        Swal.fire('Guardado', `Se Creo el Medico ${ this.medicoForm.value.nombre }.`, 'success' )
-        this.router.navigateByUrl( `/dashboard/medicos/${ resp.medico.id }` )
-      }
-    });
+    
+    if( this.medicoSeleccionado ){
+      const data: Medico = { ...this.medicoForm.value, id: this.medicoSeleccionado.id };
+
+      this._ms.actualizarMedico( data ).subscribe( ( resp: any ) => {
+        if( resp.ok ){
+          Swal.fire('Guardado', `Se Actualizo el Medico ${ this.medicoForm.value.nombre }.`, 'success' )
+          this.router.navigateByUrl( `/dashboard/medico/${ this.medicoSeleccionado.id }` )
+        }
+      });
+    }else{
+      this._ms.crearMedico( this.medicoForm.value ).subscribe( ( resp: any ) => {
+        if( resp.ok ){
+          Swal.fire('Guardado', `Se Creo el Medico ${ this.medicoForm.value.nombre }.`, 'success' )
+          this.router.navigateByUrl( `/dashboard/medico/${ resp.medico.id }` )
+        }
+      });
+    }
   }
   
   cargarHospitales(){
