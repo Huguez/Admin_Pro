@@ -28,5 +28,14 @@ export class HeaderComponent implements OnInit {
     this._us.logout();
     this.router.navigateByUrl( '/login' );
   }
+  
+  buscar( term:string ){
+    
+    if( term.length === 0 ){
+      return;
+    }
+
+    this.router.navigateByUrl( `/dashboard/buscar/${term}` );
+  }
 
 }

@@ -17,6 +17,7 @@ import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component'
 import { MedicosComponent } from './mantenimientos/medicos/medicos.component';
 import { HospitalesComponent } from './mantenimientos/hospitales/hospitales.component';
 import { MedicoComponent } from './mantenimientos/medicos/medico.component';
+import { BusquedaComponent } from './busqueda/busqueda.component';
 
 const routes: Routes = [
     {
@@ -25,10 +26,11 @@ const routes: Routes = [
         canActivate: [ AuthGuard ],
         children: [
             { path: '', component: DashboardComponent, data: { titulo: 'Dashboard' } },
+            { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Acount Settings' } },
+            { path: 'buscar/:termino', component: BusquedaComponent, data: { titulo: 'Buscar' } },
+            { path: 'grafica1', component: GraficaComponent, data: { titulo: 'Graficas' } },
             { path: 'perfil', component: PerfilComponent, data: { titulo: 'Perfil' }  },
             { path: 'progress', component: ProgressComponent, data: { titulo: 'Progress Bar' } },
-            { path: 'grafica1', component: GraficaComponent, data: { titulo: 'Graficas' } },
-            { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Acount Settings' } },
             { path: 'promesa', component: PromesasComponent, data: { titulo: 'Promesas' } },
             { path: 'rxjs', component: RxjsComponent, data: { titulo: 'Rxjs' } },
 
