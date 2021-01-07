@@ -39,7 +39,10 @@ export class UsuarioService {
         'x-token': this.token
       }
     };
+  }
 
+  get roleUsuario(): string {
+    return this.usuario.role;
   }
 
   guardarStorage( token, menu ){
@@ -93,7 +96,7 @@ export class UsuarioService {
     return this.http.post( `${ base_url }/usuarios`, formData ).pipe( 
       tap( ( resp:any ) => {
         this.guardarStorage( resp.token, resp.menu );
-        
+        console.log(resp);
       } )
      );
   }
