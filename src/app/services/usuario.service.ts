@@ -42,8 +42,13 @@ export class UsuarioService {
 
   }
 
+  guardarStorage( token, menu ){
+    localStorage.setItem( 'token', token );
+    localStorage.setItem( 'menu', JSON.stringify( menu ) );
+  }
+
   initGoogle(){
-    return new Promise( resolve => {
+    return new Promise<void>( resolve => {
       
       gapi.load('auth2', () => {
         // Retrieve the singleton for the GoogleAuth library and set up the client.
@@ -75,6 +80,8 @@ export class UsuarioService {
         this.usuario = new Usuario( nombre, email, "", img, google, role, id  ); 
        
         localStorage.setItem( 'token', resp.token );
+        localStorage.setItem('menu', resp.menu );
+        this.guardarStorage( resp.token, resp.menu );
         
         return true;
       } ),
@@ -85,7 +92,8 @@ export class UsuarioService {
   crearUsuario( formData: RegisterForm ){
     return this.http.post( `${ base_url }/usuarios`, formData ).pipe( 
       tap( ( resp:any ) => {
-        localStorage.setItem( 'token', resp.token );
+        this.guardarStorage( resp.token, resp.menu );
+        
       } )
      );
   }
@@ -93,26 +101,29 @@ export class UsuarioService {
   login( formData: LoginForm ){
     return this.http.post( `${ base_url }/login`, formData ).pipe( 
       tap( ( resp:any ) => {
+        this.guardarStorage( resp.token, resp.menu );
         
-        localStorage.setItem( 'token', resp.token );
       } )
      );
   }
-
   
   loginGoogle( token ){
     return this.http.post( `${ base_url }/login/google`, {token} ).pipe( 
       tap( ( resp:any ) => {
-        console.log( resp.tokenJWT );
+        // console.log( resp.tokenJWT );
+        resp['token'] = resp.tokenJWT;
+        this.guardarStorage( resp.token, resp.menu );
         
-        localStorage.setItem( 'token', resp.tokenJWT );
+        // localStorage.setItem( 'token', resp.tokenJWT );
+        // localStorage.setItem( 'menu', resp.menu );
       } )
      );
   }
 
   logout(){
     localStorage.removeItem( 'token' );
-
+    localStorage.removeItem('menu');
+    
     this.auth2.signOut().then( () => {
       this.ngZone.run( () => {
         console.log('logout');
