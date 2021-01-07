@@ -1,15 +1,15 @@
 
-<div class="row animated fadeIn fast">
+<div class="row">
     <div class="col-4" >
         <div class="card">
             <div class="card-body">
 
-                <div class="alert alert-info" >
+                <div class="alert alert-info" *ngIf="usuarios.length === 0" >
                   <h4 class="alert-heading">No Hay Usuarios</h4>
                   <p class="mb-0"></p>
                 </div>
 
-                <div class="table-responsive">
+                <div class="table-responsive" *ngIf="usuarios.length > 0">
                     <table class="table">
                         <thead>
                             <tr>
@@ -18,9 +18,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>6</td>
-                                <td>Nigam</td>
+                            <tr *ngFor="let usuario of usuarios" class=" animated fadeIn fast">
+                                <td><img [src]="usuario.img | imagen:'usuarios'" class="w75" /></td>
+                                <td>{{usuario.nombre}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -33,12 +33,12 @@
         <div class="card">
             <div class="card-body">
 
-                <div class="alert alert-info" >
-                  <h4 class="alert-heading">No Hay Doctores</h4>
+                <div class="alert alert-info" *ngIf="medicos.length === 0" >
+                  <h4 class="alert-heading">No Hay Medicos</h4>
                   <p class="mb-0"></p>
                 </div>
 
-                <div class="table-responsive">
+                <div class="table-responsive" *ngIf="medicos.length > 0" >
                     <table class="table">
                         <thead>
                             <tr>
@@ -47,9 +47,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>6</td>
-                                <td>Nigam</td>
+                            <tr *ngFor="let medico of medicos" class="animated fadeIn fast"
+                            (click)="abrirMedico( medico )">
+                                <td><img [src]="medico.img | imagen:'medicos'" class="w75"  /></td>
+                                <td>
+                                    <a [routerLink]="['/dashboard/medico', medico.id ]" >
+                                        {{ medico.nombre }}
+                                    </a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -62,12 +67,12 @@
         <div class="card">
             <div class="card-body">
 
-                <div class="alert alert-info" >
+                <div class="alert alert-info" *ngIf="hospitales.length === 0" >
                   <h4 class="alert-heading">No Hay Hospitales</h4>
                   <p class="mb-0"></p>
                 </div>
 
-                <div class="table-responsive">
+                <div class="table-responsive" *ngIf="hospitales.length > 0" >
                     <table class="table">
                         <thead>
                             <tr>
@@ -76,9 +81,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>6</td>
-                                <td>Nigam</td>
+                            <tr *ngFor="let hospital of hospitales" class="animated fadeIn fast">
+                                <td><img [src]="hospital.img | imagen:'hospitales'" class="w50" /></td>
+                                <td>{{hospital.nombre}}</td>
                             </tr>
                         </tbody>
                     </table>

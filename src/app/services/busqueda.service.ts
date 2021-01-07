@@ -39,6 +39,11 @@ export class BusquedaService {
   private trasformarMedicos( result: any[] ):Medico[]{
     return result;
   }
+  
+  busquedaGlobal( termino:string ){
+    const endPoint = `${ base_url }/todo/${ termino }`;
+    return this.http.get( endPoint, this.headers );
+  }
 
   buscar( tipo: 'usuarios'|'medicos'|'hospitales', termino: string ){
 

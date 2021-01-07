@@ -22,6 +22,14 @@
     border: 1px solid grey;
 }
 
+.w50 {
+    width: 50px;
+}
+
+.w75 {
+    width: 75px;
+}
+
 .w100 {
     width: 100px;
 }
@@ -43,7 +51,6 @@
     height: 100%;
     z-index: 9999;
 }
-
 
 .oculto{
     display: none;
