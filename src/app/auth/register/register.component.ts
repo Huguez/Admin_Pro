@@ -35,8 +35,9 @@ export class RegisterComponent {
     
     this._us.crearUsuario( this.registerForm.value ).subscribe( 
       ( res ) => console.log("")
-     ,( error ) =>{
-      swal.fire( 'Error', error.error.msj, 'error' ) 
+     ,( error ) => {
+       console.log(error);
+      swal.fire( 'Error', error.error.mensaje, 'error' ) 
     });
 
 

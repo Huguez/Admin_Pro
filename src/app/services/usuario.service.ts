@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { tap, map, catchError } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 import { environment } from '../../environments/environment';
 
@@ -82,8 +83,8 @@ export class UsuarioService {
           
         this.usuario = new Usuario( nombre, email, "", img, google, role, id  ); 
        
-        localStorage.setItem( 'token', resp.token );
-        localStorage.setItem('menu', resp.menu );
+        // localStorage.setItem( 'token', resp.token );
+        // localStorage.setItem('menu', resp.menu );
         this.guardarStorage( resp.token, resp.menu );
         
         return true;
@@ -94,9 +95,14 @@ export class UsuarioService {
 
   crearUsuario( formData: RegisterForm ){
     return this.http.post( `${ base_url }/usuarios`, formData ).pipe( 
-      tap( ( resp:any ) => {
+      map( ( resp:any ) => {
         this.guardarStorage( resp.token, resp.menu );
-        console.log(resp);
+        return resp;
+      } ), catchError( err => {
+        console.log(err);
+        
+        Swal.fire( err.error.msj, 'Use otro correo', 'error' );
+        return of( err );
       } )
      );
   }
