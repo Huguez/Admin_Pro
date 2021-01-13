@@ -1,7 +1,7 @@
 .error-box {
     height: 100%;
     position: fixed;
-    background: url(../../assets/images/background/error-bg.jpg) no-repeat center center #fff;
+    background: url(https://res.cloudinary.com/dkdv4nnhu/image/upload/v1610513551/error-bg_qetggs.jpg) no-repeat center center #fff;
     width: 100%; }
     .error-box .footer {
       width: 100%;
